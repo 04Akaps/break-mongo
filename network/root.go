@@ -32,14 +32,9 @@ func NewNetwork() *Network {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	r.RegisterGETHandler("/", r.healthChecker)
-
 	NewUserAPI(r, r.document)
+	NewBulkUserAPI(r, r.document)
 	return r
-}
-
-func (r *Network) healthChecker(c *gin.Context) {
-	r.RespOK(c, "Health Checker")
 }
 
 func (r *Network) Run(port string) error {

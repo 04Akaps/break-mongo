@@ -27,10 +27,6 @@ func (d *Document) InsertDummyUserData(req *types.User) {
 	}
 }
 
-func (d *Document) InsertBulkDummyUserData(req *types.User) {
-
-}
-
 func (d *Document) UpdateUserData(req *types.User) error {
 	filter := bson.M{
 		"name": req.Name,

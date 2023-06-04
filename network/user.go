@@ -31,8 +31,6 @@ func NewUserAPI(router *Network, doc *document.Document) *userAPI {
 		userApiInstance.router.RegisterGETHandler(BASE_USER_URI+"/find", userApiInstance.findOneUserData)
 		userApiInstance.router.RegisterGETHandler(BASE_USER_URI+"/sortFind", userApiInstance.findUserDataByAgeSort)
 
-		userApiInstance.router.RegisterPOSTHandler(BASE_USER_URI+"/dummyBulk", userApiInstance.registerBulkUserData)
-
 	})
 
 	return userApiInstance
@@ -60,10 +58,6 @@ func (u *userAPI) registerDummyUserData(c *gin.Context) {
 
 		u.doc.InsertDummyUserData(dummyUser)
 	}
-}
-
-func (u *userAPI) registerBulkUserData(c *gin.Context) {
-	// 많은 데이터를 한번에 삽입 할 떄,
 }
 
 func (u *userAPI) updateUserData(c *gin.Context) {
