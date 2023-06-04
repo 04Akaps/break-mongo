@@ -80,7 +80,7 @@ func (d *Document) FindAllBulkUserBySort() (*[]types.BulkUser, error) {
 			"$lte": 30,
 		},
 	}
-	
+
 	opts := options.Find()
 	// Name으로 정렬이 일단 되어 있기 떄문에 그렇게 많은 영향을 주지는 않는다.
 	opts.SetSort(bson.D{{Key: "name", Value: -1}})
@@ -116,10 +116,15 @@ func (d *Document) AddIndexByName() {
 }
 
 func (d *Document) AddDoubleIndex() {
+	// 만약 순서를 age, name으로 두면 FindAllBulkUserBySort 함수에서 효율적으로 동작
+
+	// 하지만 반대로 name, age로 두면 name을 기준으로 age를 정렬하기 떄문에
+	// FindAllBulkUserBySort에서 비효율적으로 동작을 하게 된다.
+	// -> 왜냐하면 FindAllBulkUserBySort 에서는 age기준으로 name을 가져오기 떄문에
 	indexModel := mongo.IndexModel{
 		Keys: bson.D{
-			{"name", 1},
 			{"age", 1},
+			{"name", 1},
 		},
 	}
 

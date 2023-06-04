@@ -69,11 +69,6 @@ func (u *bulkUserAPI) findAllBulkUserBySort(c *gin.Context) {
 		log.Println(err)
 		u.router.Resp(c, 401, "Find ALl Failed")
 	} else {
-		// 81.474125ms  // filter -> age, sort -> name  : -1
-		// 175.930208ms
-
-		// 1.317996s // -> no filter, sort -> name : -1 , age : -1
-		// 1.11846925s // -> no filter
 
 		elapsedTime := time.Since(startTime) // 총 걸린 시간 계산
 		log.Println("쿼리 실행 시간: ", elapsedTime)
