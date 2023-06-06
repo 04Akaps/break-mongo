@@ -4,12 +4,16 @@ import (
 	"break-mongo/mongo"
 	"context"
 	m "go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/gridfs"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Document struct {
 	mongo              *mongo.MongoClient
 	userCollection     *m.Collection
 	userBulkCollection *m.Collection
+
+	fileBucket *gridfs.Bucket
 }
 
 func NewDocument() *Document {
@@ -27,6 +31,13 @@ func NewDocument() *Document {
 
 		d.userCollection = d.mongo.DB.Collection("user-collection")
 		d.userBulkCollection = d.mongo.DB.Collection("user-bulk-collection")
+
+		bucketOpts := options.GridFSBucket().SetName("my-custom-bucket-name")
+
+		if d.fileBucket, err = gridfs.NewBucket(d.mongo.DB, bucketOpts); err != nil {
+			panic(err)
+		}
+
 		return d
 	}
 

@@ -34,6 +34,8 @@ func NewNetwork() *Network {
 
 	NewUserAPI(r, r.document)
 	NewBulkUserAPI(r, r.document)
+	NewFileAPI(r, r.document)
+
 	return r
 }
 

@@ -16,4 +16,5 @@ func (r *Network) RespOK(c *gin.Context, resp interface{}) {
 const (
 	BASE_USER_URI      = "/user"
 	BASE_BULK_USER_URI = "/bulk-user"
+	BASE_FILE_URI      = "/file"
 )
