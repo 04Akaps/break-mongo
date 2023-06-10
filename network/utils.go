@@ -17,4 +17,5 @@ const (
 	BASE_USER_URI      = "/user"
 	BASE_BULK_USER_URI = "/bulk-user"
 	BASE_FILE_URI      = "/file"
+	BASE_AGGREAGTE_URI = "/aggregate"
 )

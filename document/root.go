@@ -14,6 +14,9 @@ type Document struct {
 	userBulkCollection *m.Collection
 
 	fileBucket *gridfs.Bucket
+
+	aggregateCollectionOne *m.Collection
+	aggregateCollectionTwo *m.Collection
 }
 
 func NewDocument() *Document {
@@ -32,8 +35,10 @@ func NewDocument() *Document {
 		d.userCollection = d.mongo.DB.Collection("user-collection")
 		d.userBulkCollection = d.mongo.DB.Collection("user-bulk-collection")
 
-		bucketOpts := options.GridFSBucket().SetName("my-custom-bucket-name")
+		d.aggregateCollectionOne = d.mongo.DB.Collection("aggregate-collection-one")
+		d.aggregateCollectionTwo = d.mongo.DB.Collection("aggregate-collection-two")
 
+		bucketOpts := options.GridFSBucket().SetName("my-custom-bucket-name")
 		if d.fileBucket, err = gridfs.NewBucket(d.mongo.DB, bucketOpts); err != nil {
 			panic(err)
 		}
