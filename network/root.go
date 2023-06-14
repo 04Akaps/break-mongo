@@ -8,14 +8,16 @@ import (
 )
 
 type Network struct {
-	engine   *gin.Engine
-	document *document.Document
+	engine        *gin.Engine
+	document      *document.Document
+	shardDocument *document.ShardingDocument
 }
 
 func NewNetwork() *Network {
 	r := &Network{
-		engine:   gin.New(),
-		document: document.NewDocument(),
+		engine:        gin.New(),
+		document:      document.NewDocument(),
+		shardDocument: document.NewShardingDocument(),
 	}
 
 	r.engine.Use(gin.Logger())
@@ -36,6 +38,7 @@ func NewNetwork() *Network {
 	NewBulkUserAPI(r, r.document)
 	NewFileAPI(r, r.document)
 	NewAggregateAPI(r, r.document)
+	NewShardAPI(r, r.shardDocument, r.document)
 
 	return r
 }

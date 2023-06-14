@@ -1,0 +1,7 @@
+run:
+	go run ./cmd/main.go
+
+mongo-bind:
+	docker-compose -f mongo/docker-compose.yaml up -d
+
+.PHONY: run, mongo-bind
