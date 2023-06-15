@@ -198,16 +198,44 @@ func (d *Document) FindByNameAggregate(name string) (*[]types.AggregateDummyOne,
 				"fundingRounds": "$joinData.fundingRounds",
 			},
 		},
-		//{
-		//	"$match": bson.M{
-		//		"foundYear": bson.M{
-		//			"$lte": bson.M{
-		//				"foundYear": 3000,
-		//			},
-		//		},
-		//	},
-		//},
 	}
+
+	//  이렇게도 작성 가능
+	//pipeLine := []bson.M{
+	//	{
+	//		"$project": bson.M{
+	//			"_id": 0,
+	//			"a":   "$$ROOT",
+	//		},
+	//	},
+	//	{
+	//		"$match": bson.M{
+	//			"a.name": name,
+	//		},
+	//	},
+	//	{
+	//		"$lookup": bson.M{
+	//			"from":         d.aggregateCollectionOne.Name(),
+	//			"localField":   "a.name",
+	//			"foreignField": "name",
+	//			"as":           "joinData",
+	//		},
+	//	},
+	//	{
+	//		"$unwind": bson.M{
+	//			"path":                       "$joinData",
+	//			"preserveNullAndEmptyArrays": false,
+	//		},
+	//	},
+	//
+	//	// 추가적인 쿼리 작성
+	//	// 최종 마주보는 데이터를 할당
+	//	{
+	//		"$replaceRoot": bson.M{
+	//			"newRoot": "$a",
+	//		},
+	//	},
+	//}
 
 	ctx := context.TODO()
 	cursor, err := d.aggregateCollectionTwo.Aggregate(ctx, pipeline)
