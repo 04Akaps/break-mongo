@@ -2,62 +2,47 @@ version: "3.5"
 
 services:
 
-  mongo-config-server1:
+  config-one:
     image: mongo:4.2
-    container_name: mongo-config-server1
-    command: mongod --configsvr --replSet rnd-config-replica-set --port 27019
-  mongo-config-server2:
+    container_name:  config-one
+    command: mongod --configsvr --replSet configRR --port 27019
+  config-two:
     image: mongo:4.2
-    container_name: mongo-config-server2
-    command: mongod --configsvr --replSet rnd-config-replica-set --port 27019
-  mongo-config-server3:
+    container_name: config-two
+    command: mongod --configsvr --replSet configRR --port 27019
+  config-three:
     image: mongo:4.2
-    container_name: mongo-config-server3
-    command: mongod --configsvr --replSet rnd-config-replica-set --port 27019
+    container_name: config-three
+    command: mongod --configsvr --replSet configRR --port 27019
 
-  mongo-first-shard1:
+  shard-one:
     image: mongo:4.2
-    container_name: mongo-first-shard1
-    command: mongod --shardsvr --replSet rnd-first-shard-replica-set --port 27018
-  mongo-first-shard2:
+    container_name: shard-one
+    command: mongod --shardsvr --replSet shardRR --port 27018
+  shard-two:
     image: mongo:4.2
-    container_name: mongo-first-shard2
-    command: mongod --shardsvr --replSet rnd-first-shard-replica-set --port 27018
-  mongo-first-shard3:
+    container_name: shard-two
+    command: mongod --shardsvr --replSet shardRR --port 27018
+  shard-three:
     image: mongo:4.2
-    container_name: mongo-first-shard3
-    command: mongod --shardsvr --replSet rnd-first-shard-replica-set --port 27018
+    container_name: shard-three
+    command: mongod --shardsvr --replSet shardRR --port 27018
 
-  mongo-second-shard1:
+  shard-one-one:
     image: mongo:4.2
-    container_name: mongo-second-shard1
-    command: mongod --shardsvr --replSet rnd-second-shard-replica-set --port 27018
-  mongo-second-shard2:
+    container_name: shard-one-one
+    command: mongod --shardsvr --replSet shardRR2 --port 27018
+  shard-two-two:
     image: mongo:4.2
-    container_name: mongo-second-shard2
-    command: mongod --shardsvr --replSet rnd-second-shard-replica-set --port 27018
-  mongo-second-shard3:
+    container_name: shard-two-two
+    command: mongod --shardsvr --replSet shardRR2 --port 27018
+  shard-three-three:
     image: mongo:4.2
-    container_name: mongo-second-shard3
-    command: mongod --shardsvr --replSet rnd-second-shard-replica-set --port 27018
+    container_name: shard-three-three
+    command: mongod --shardsvr --replSet shardRR2 --port 27018
 
-  mongo-third-shard1:
+  mongos-one:
     image: mongo:4.2
-    container_name: mongo-third-shard1
-    command: mongod --shardsvr --replSet rnd-third-shard-replica-set --port 27018
-  mongo-third-shard2:
-    image: mongo:4.2
-    container_name: mongo-third-shard2
-    command: mongod --shardsvr --replSet rnd-third-shard-replica-set --port 27018
-  mongo-third-shard3:
-    image: mongo:4.2
-    container_name: mongo-third-shard3
-    command: mongod --shardsvr --replSet rnd-third-shard-replica-set --port 27018
-
-  mongo-client:
-    image: mongo:4.2
-    container_name: mongo-client
-    command: mongos --configdb rnd-config-replica-set/mongo-config-server1:27019,mongo-config-server2:27019,mongo-config-server3:27019 --port 27017 --bind_ip_all
-    ports:
-      - 27017:27017
+    container_name: mongos-one
+    command: mongos --configdb configRR/config-one:27019,config-two:27019,config-three:27019 --port 27017
 
