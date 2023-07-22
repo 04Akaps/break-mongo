@@ -39,6 +39,7 @@ func NewNetwork() *Network {
 	NewFileAPI(r, r.document)
 	NewAggregateAPI(r, r.document)
 	NewShardAPI(r, r.shardDocument, r.document)
+	NewSearchAPI(r, r.document)
 
 	return r
 }

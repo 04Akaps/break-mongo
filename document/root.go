@@ -17,6 +17,8 @@ type Document struct {
 
 	aggregateCollectionOne *m.Collection
 	aggregateCollectionTwo *m.Collection
+
+	search *m.Collection
 }
 
 type ShardingDocument struct {
@@ -26,7 +28,7 @@ type ShardingDocument struct {
 
 func NewDocument() *Document {
 	ctx := context.Background()
-	endPoint := "mongodb+srv://hojin:1111@msggo.wbwdsv8.mongodb.net/?retryWrites=true&w=majority"
+	endPoint := "mongodb+srv://jukas:1111@cluster0.8yfmxen.mongodb.net/?retryWrites=true&w=majority"
 
 	if client, err := mongo.NewMongoConnect(ctx, endPoint); err != nil {
 		panic(err)
@@ -35,13 +37,16 @@ func NewDocument() *Document {
 			mongo: client,
 		}
 
-		d.mongo.DB = d.mongo.Client.Database("break-mongo")
+		d.mongo.DB = d.mongo.Client.Database("wemix-play-nft-market-db")
+		//break-mongo or wemix-play-nft-market-db
 
 		d.userCollection = d.mongo.DB.Collection("user-collection")
 		d.userBulkCollection = d.mongo.DB.Collection("user-bulk-collection")
 
 		d.aggregateCollectionOne = d.mongo.DB.Collection("aggregate-collection-one")
 		d.aggregateCollectionTwo = d.mongo.DB.Collection("aggregate-collection-two")
+
+		d.search = d.mongo.DB.Collection("nfts")
 
 		bucketOpts := options.GridFSBucket().SetName("my-custom-bucket-name")
 		if d.fileBucket, err = gridfs.NewBucket(d.mongo.DB, bucketOpts); err != nil {
